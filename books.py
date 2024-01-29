@@ -11,10 +11,6 @@ contents = contents.strip().split('<')
 
 books = []
 book = {}
-newList = {}
-listOfASIN = []
-
-COUNTER = 1
 
 def getBookTitle(eachLine):
     title = eachLine.split('>')[1]
@@ -41,17 +37,12 @@ def getPublisher(eachLine):
     if publisher != '':
         book['Publisher'] = publisher
 
-def getASINNumber(eachLine):
-    ASINNumber = eachLine.split('>')[1]
-    newList['ASIN_Number'] = ASINNumber
-
 for eachLine in contents:
     if 'title pronunciation' in eachLine:
         if book != {}:
             book['Bookshelves'] = 'Kindle'
             book['Binding'] = 'Kindle Edition'
             books.append(book)
-            listOfASIN.append(newList)
             book = {}
         getBookTitle(eachLine)
     elif 'author pronunciation' in eachLine:
@@ -61,10 +52,6 @@ for eachLine in contents:
     elif 'publisher' in eachLine:
         getPublisher(eachLine)
 
-    if 'ASIN' in eachLine:
-        getASINNumber(eachLine)
-
-#bookHeader = ['Title', 'Author', 'Publisher', 'Year Published', 'Bookshelf', 'Binding']
 bookHeader = ['Title','Author','ISBN','My Rating','Average Rating','Publisher','Binding','Year Published','Original Publication Year','Date Read','Date Added','Shelves','Bookshelves','My Review']
 
 with open ('Kindle_books.csv', 'w') as csvfile:
@@ -73,8 +60,3 @@ with open ('Kindle_books.csv', 'w') as csvfile:
     writer.writerows(books)
 
 headers = ['Title', 'ASIN Number']
-
-#with open ('ASIN_Book_Numbers.csv', 'w') as f:
-#    writer = csv.DictWriter(f, fieldnames=headers)
-#    writer.writeheader()
-#    writer.writerows(newList)
