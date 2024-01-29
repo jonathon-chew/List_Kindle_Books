@@ -58,5 +58,3 @@ with open ('Kindle_books.csv', 'w') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames = bookHeader)
     writer.writeheader()
     writer.writerows(books)
-
-headers = ['Title', 'ASIN Number']
